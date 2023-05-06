@@ -61,7 +61,7 @@ def create_accounts():
 # LIST ALL ACCOUNTS
 ######################################################################
 
-# ... place you code here to LIST accounts ...
+
 @app.route("/accounts", methods=["GET"])
 def list_accounts():
     app.logger.info("Request to list Accounts")
@@ -74,7 +74,7 @@ def list_accounts():
 # READ AN ACCOUNT
 ######################################################################
 
-# ... place you code here to READ an account ...
+
 @app.route("/accounts/<int:id>", methods=["GET"])
 def read_account(id):
     """Reaad an individual account"""
@@ -89,13 +89,13 @@ def read_account(id):
 # UPDATE AN EXISTING ACCOUNT
 ######################################################################
 
-# ... place you code here to UPDATE an account ...
+
 @app.route('/accounts/<int:id>', methods=["PUT"])
 def update_account(id):
     app.logger.info("Request to update an Account with id: %s", id)
     account = Account.find(id)
     if not account:
-        abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account_id}] could not be found.")
+        abort(status.HTTP_404_NOT_FOUND, f"Account with id [{id}] could not be found.")
     account.deserialize(request.get_json())
     account.update()
     app.logger.info("Account with id %s updated.", id)
@@ -105,7 +105,7 @@ def update_account(id):
 # DELETE AN ACCOUNT
 ######################################################################
 
-# ... place you code here to DELETE an account ...
+
 @app.route('/accounts/<int:id>', methods=["DELETE"])
 def delete_account(id):
     app.logger.info("Request to delete Account with id: %s", id)

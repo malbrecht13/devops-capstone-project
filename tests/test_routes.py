@@ -128,7 +128,7 @@ class TestAccountService(TestCase):
         """It should Read a single Account"""
         account = self._create_accounts(1)[0]
         resp = self.client.get(
-            f"{BASE_URL}/{account.id}", content_type="application/json"
+            "{}/{}".format(BASE_URL, account.id), content_type="application/json"
         )
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         data = resp.get_json()
@@ -136,7 +136,7 @@ class TestAccountService(TestCase):
 
     def test_account_not_found(self):
         """It should not Read an Account that is not found"""
-        resp = self.client.get(f"{BASE_URL}/0")
+        resp = self.client.get("{}/{}".format(BASE_URL, "0"))
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_list_accounts(self):
@@ -151,11 +151,11 @@ class TestAccountService(TestCase):
         """It should update an account"""
         account = self._create_accounts(1)[0]
         resp = self.client.get(
-            f"{BASE_URL}/{account.id}", content_type="application/json"
+            "{}/{}".format(BASE_URL, account.id), content_type="application/json"
         )
         data = resp.get_json()
         data['name'] = 'New_Name'
-        resp = self.client.put(f"{BASE_URL}/{account.id}", json=data)
+        resp = self.client.put("{}/{}".format(BASE_URL, account.id), json=data)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         data = resp.get_json()
         self.assertEqual(data['name'], 'New_Name')
@@ -163,8 +163,5 @@ class TestAccountService(TestCase):
     def test_delete_account(self):
         """It should delete an account"""
         account = self._create_accounts(1)[0]
-        resp = self.client.delete(f"{BASE_URL}/{account.id}")
+        resp = self.client.delete("{}/{}".format(BASE_URL, account.id))
         self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
-
-
-    
